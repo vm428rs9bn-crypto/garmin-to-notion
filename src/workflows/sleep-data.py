@@ -84,7 +84,7 @@ def create_sleep_data(client, database_id, sleep_data, skip_zero_sleep=True):
         "Ruhepuls": {"number": sleep_data.get('restingHeartRate', 0)}
     }
 
-    client.pages.create(parent={"database_id": database_id}, properties=properties, icon={"emoji": "🌙"}
+    client.pages.create(parent={"database_id": database_id}, properties=properties, icon={"emoji": "🌙"})
     print(f"Created sleep entry for: {sleep_date}")
 
 
