@@ -35,7 +35,7 @@ def daily_steps_exist(client, database_id, activity_date):
     return results[0] if results else None
 
 
-def steps_need_up(existing_steps, new_steps):
+def steps_need_update(existing_steps, new_steps):
     """
     Compare existing steps data with imported data to determine if an up is needed.
     """
