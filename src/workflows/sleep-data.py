@@ -32,7 +32,7 @@ def format_time(timestamp):
 
 def format_time_readable(timestamp):
     return (
-        datetime.fromtimestamp(timestamp / 1000, local_tz).strftime("%H:%M")
+        time.fromtimestamp(timestamp / 1000, local_tz).strftime("%H:%M")
         if timestamp else "Unknown"
     )
 
@@ -44,7 +44,7 @@ def format_date_for_name(sleep_date):
 def sleep_data_exists(client, database_id, sleep_date):
     query = client.databases.query(
         database_id=database_id,
-        filter={"property": "Long Date", "date": {"equals": sleep_date}}
+        filter={"property": "Datum", "date": {"equals": sleep_date}}
     )
     results = query.get('results', [])
     return results[0] if results else None  # Ensure it returns None instead of causing IndexError
@@ -65,8 +65,8 @@ def create_sleep_data(client, database_id, sleep_data, skip_zero_sleep=True):
         return
 
     properties = {
-        "Date": {"title": [{"text": {"content": format_date_for_name(sleep_date)}}]},
-        "Times": {"rich_text": [{"text": {
+        "Datum": {"title": [{"text": {"content": format_date_for_name(sleep_date)}}]},
+        "Uhrzeit": {"rich_text": [{"text": {
             "content": f"{format_time_readable(daily_sleep.get('sleepStartTimestampGMT'))} → {format_time_readable(daily_sleep.get('sleepEndTimestampGMT'))}"}}]},
         "Long Date": {"date": {"start": sleep_date}},
         "Full Date/Time": {"date": {"start": format_time(daily_sleep.get('sleepStartTimestampGMT')),
@@ -76,12 +76,12 @@ def create_sleep_data(client, database_id, sleep_data, skip_zero_sleep=True):
         "Deep Sleep (h)": {"number": round(daily_sleep.get('deepSleepSeconds', 0) / 3600, 1)},
         "REM Sleep (h)": {"number": round(daily_sleep.get('remSleepSeconds', 0) / 3600, 1)},
         "Awake Time (h)": {"number": round(daily_sleep.get('awakeSleepSeconds', 0) / 3600, 1)},
-        "Total Sleep": {"rich_text": [{"text": {"content": format_duration(total_sleep)}}]},
-        "Light Sleep": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('lightSleepSeconds', 0))}}]},
-        "Deep Sleep": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('deepSleepSeconds', 0))}}]},
-        "REM Sleep": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('remSleepSeconds', 0))}}]},
-        "Awake Time": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('awakeSleepSeconds', 0))}}]},
-        "Resting HR": {"number": sleep_data.get('restingHeartRate', 0)}
+        "Gesamt": {"rich_text": [{"text": {"content": format_duration(total_sleep)}}]},
+        "Leicht": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('lightSleepSeconds', 0))}}]},
+        "Tief": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('deepSleepSeconds', 0))}}]},
+        "REM": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('remSleepSeconds', 0))}}]},
+        "Wach": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('awakeSleepSeconds', 0))}}]},
+        "Ruhepuls": {"number": sleep_data.get('restingHeartRate', 0)}
     }
 
     client.pages.create(parent={"database_id": database_id}, properties=properties, icon={"emoji": "😴"})
