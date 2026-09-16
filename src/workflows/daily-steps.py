@@ -26,7 +26,7 @@ def daily_steps_exist(client, database_id, activity_date):
         database_id=database_id,
         filter={
             "and": [
-                {"property": "Date", "date": {"equals": activity_date}},
+                {"property": "Datum", "date": {"equals": activity_date}},
                 {"property": "Activity Type", "title": {"equals": "Walking"}}
             ]
         }
@@ -35,9 +35,9 @@ def daily_steps_exist(client, database_id, activity_date):
     return results[0] if results else None
 
 
-def steps_need_update(existing_steps, new_steps):
+def steps_need_up(existing_steps, new_steps):
     """
-    Compare existing steps data with imported data to determine if an update is needed.
+    Compare existing steps data with imported data to determine if an up is needed.
     """
     existing_props = existing_steps['properties']
     activity_type = "Walking"
@@ -50,7 +50,7 @@ def steps_need_update(existing_steps, new_steps):
     )
 
 
-def update_daily_steps(client, existing_steps, new_steps):
+def up_daily_steps(client, existing_steps, new_steps):
     """
     Update an existing daily steps entry in the Notion database with new data.
     """
@@ -81,7 +81,7 @@ def create_daily_steps(client, database_id, steps):
         total_distance = 0
     properties = {
         "Activity Type": {"title": [{"text": {"content": "Walking"}}]},
-        "Date": {"date": {"start": steps.get('calendarDate')}},
+        "Datum": {"date": {"start": steps.get('calendarDate')}},
         "Total Steps": {"number": steps.get('totalSteps')},
         "Step Goal": {"number": steps.get('stepGoal')},
         "Total Distance (km)": {"number": round(total_distance / 1000, 2)}
