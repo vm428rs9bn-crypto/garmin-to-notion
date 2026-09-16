@@ -1,5 +1,4 @@
 from datetime import datetime
-import time
 
 import pytz
 from dotenv import load_dotenv, dotenv_values
@@ -33,7 +32,7 @@ def format_time(timestamp):
 
 def format_time_readable(timestamp):
     return (
-        time.fromtimestamp(timestamp / 1000, local_tz).strftime("%H:%M")
+        datetime.fromtimestamp(timestamp / 1000, local_tz).strftime("%H:%M")
         if timestamp else "Unknown"
     )
 
