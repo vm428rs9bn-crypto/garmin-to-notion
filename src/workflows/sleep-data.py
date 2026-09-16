@@ -44,7 +44,7 @@ def format_date_for_name(sleep_date):
 def sleep_data_exists(client, database_id, sleep_date):
     query = client.databases.query(
         database_id=database_id,
-        filter={"property": "Datum", "date": {"equals": sleep_date}}
+        filter={"property": "Long Date", "date": {"equals": sleep_date}}
     )
     results = query.get('results', [])
     return results[0] if results else None  # Ensure it returns None instead of causing IndexError
