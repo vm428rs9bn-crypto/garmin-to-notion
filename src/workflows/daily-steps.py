@@ -50,7 +50,7 @@ def steps_need_update(existing_steps, new_steps):
     )
 
 
-def up_daily_steps(client, existing_steps, new_steps):
+def update_daily_steps(client, existing_steps, new_steps):
     """
     Update an existing daily steps entry in the Notion database with new data.
     """
