@@ -79,7 +79,7 @@ def create_sleep_data(client, database_id, sleep_data, skip_zero_sleep=True):
         "Gesamt": {"rich_text": [{"text": {"content": format_duration(total_sleep)}}]},
         "Leicht": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('lightSleepSeconds', 0))}}]},
         "Tief": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('deepSleepSeconds', 0))}}]},
-        "REM": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('remSleepSeconds', 0))}}]},
+        "REM Sleep": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('remSleepSeconds', 0))}}]},
         "Wach": {"rich_text": [{"text": {"content": format_duration(daily_sleep.get('awakeSleepSeconds', 0))}}]},
         "Ruhepuls": {"number": sleep_data.get('restingHeartRate', 0)}
     }
